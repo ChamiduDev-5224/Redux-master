@@ -1,6 +1,6 @@
 let id = 0;
 
-const reducer = (state = [], action) => {
+const Reducer = (state = [], action) => {
   switch (action.type) {
     case "ADD":
       return [
@@ -12,12 +12,10 @@ const reducer = (state = [], action) => {
         },
       ];
     case "REMOVE":
-      return state.filter((data) => {
-        data.id !== action.payload.id;
-      });
+      return state.filter((data) => data.id !== action.payload.id);
     default:
       return state;
   }
 };
 
-export default reducer;
+export default Reducer;
