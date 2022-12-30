@@ -1,25 +1,55 @@
-import logo from "./logo.svg";
-import "./App.css";
-import Store from "./redux/store/Store";
+import Login from "./components/Login";
+import Home from "./components/Home";
+import Form from "./components/Form";
+import Signup from "./components/Signup";
+import NotFound from "./components/NotFound";
+import { Route, Routes } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./components/connection/FirebaseConfig";
+import { ProtectedRoute } from "./context/ProtectedRoute";
 function App() {
+  const [loggedUser, setLoggedUser] = useState("");
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+  const getUserInfo = () => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setLoggedUser(user.email);
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        const uid = user.uid;
+        // ...
+        console.log("uid", uid);
+      } else {
+        // User is signed out
+        // ...
+        console.log("user is logged out");
+      }
+    });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      {console.log(Store)}
-    </div>
+    <>
+      <div className="h-screen bg-slate-900 ">
+        <Routes>
+          <Route exact path="/" element={<Login />} />
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute user={loggedUser}>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/form" element={<Form />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
+    </>
   );
 }
 
