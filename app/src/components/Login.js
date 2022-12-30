@@ -53,7 +53,7 @@ function Login() {
                 <img src={errorSvg} alt="" />
               </div>
               <div className="ml-3 text-[12px] font-normal">
-                Sorry! password or username wrong
+                Sorry ! password or username wrong
               </div>
               <Toast.Toggle className="ml-4 p-1" />
             </Toast>
