@@ -13,7 +13,6 @@ import { auth } from "./connection/FirebaseConfig";
 function Home() {
   const [showToast, setShowToast] = useState("");
   const [fetchData, setFetchData] = useState([]);
-  const [loggedUser, setLoggedUser] = useState("");
   const userCollectionRef = collection(connection, "thoughts");
 
   useEffect(() => {
@@ -24,25 +23,7 @@ function Home() {
       );
     };
     getData();
-    getUserInfo();
   }, []);
-
-  const getUserInfo = () => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setLoggedUser(user.email);
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid;
-        // ...
-        console.log("uid", uid);
-      } else {
-        // User is signed out
-        // ...
-        console.log("user is logged out");
-      }
-    });
-  };
 
   const handleClick = () => {
     const randomId = Math.random(1, 600);
@@ -57,7 +38,7 @@ function Home() {
   return (
     <div>
       <div className="bg-gray-800">
-        <Header loggedUser={loggedUser} />
+        <Header />
         <div className="show-toast h-16 w-[16rem] mx-auto my-auto md:w-[22rem] md:ml-16">
           {showToast ? (
             <Toast className="w-[17rem]">
@@ -138,7 +119,7 @@ function Home() {
           />
         </div>
         <div className=" flex flex-row justify-center overflow-hidden ">
-          <div className="overflow-y-auto h-48 scrol relative shadow-md sm:rounded-lg">
+          <div className="overflow-y-auto h- scrol relative shadow-md sm:rounded-lg">
             <table className="w-[600px] text-sm text-left  text-gray-500 dark:text-gray-400 ">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>

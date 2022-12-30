@@ -26,6 +26,7 @@ function Login() {
   };
 
   const onLogin = (e) => {
+    console.log(showToast);
     e.preventDefault();
     signInWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {

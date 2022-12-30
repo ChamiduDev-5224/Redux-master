@@ -10,7 +10,6 @@ import { auth } from "./components/connection/FirebaseConfig";
 import { ProtectedRoute } from "./context/ProtectedRoute";
 function App() {
   const [loggedUser, setLoggedUser] = useState("");
-
   useEffect(() => {
     getUserInfo();
   }, []);
@@ -18,14 +17,7 @@ function App() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setLoggedUser(user.email);
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid;
-        // ...
-        console.log("uid", uid);
       } else {
-        // User is signed out
-        // ...
         console.log("user is logged out");
       }
     });
